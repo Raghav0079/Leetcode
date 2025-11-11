@@ -16,24 +16,31 @@ Return the simplified canonical path.'''
 
 
 class Solution(object):
+    
     def simplifyPath(self, path):
         """
         :type path: str
         :rtype: str
         """
-        stack =[]
-        components=path.split('/')
-        for component in components:
-            if component == '' or component == '.':
-                continue
-            elif component == '..':
-                if stack :
-                    stack.pop()
-                else:
-                    continue 
+        stack = []
+        cur = ""
+
+        for c in path + "/":
+            if c == "/":
+                if cur == "..":
+                    if stack:
+                        stack.pop()
+                elif cur != "" and cur != ".":
+                    stack.append(cur)
+                cur = ""
             else:
-                stack.append(component)
-        return '/' + '/'.join(stack)
+                cur += c
+
+        if not stack:
+            return "/"
+        return "/" + "/".join(stack)
+
+        
     
     
         
