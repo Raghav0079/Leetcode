@@ -24,33 +24,30 @@ class MinStack(object):
         :rtype: None
         """
         self.stack.append(val)
-        if not self.min_stack or val <= self.min_stack[-1]:
-            self.min_stack.append(val)
+        
+        val=min(val,self.min_stack[-1] if self.min_stack else val)
+        self.min_stack.append(val)
         
 
     def pop(self):
         """
         :rtype: None
         """
-        if self.stack:
-            val = self.stack.pop()
-            if val == self.min_stack[-1]:
-                self.min_stack.pop()
+        self.stack.pop()
+        self.min_stack.pop()
+        
         
 
     def top(self):
         """
         :rtype: int
         """
-        if self.stack:
-            return self.stack[-1]
+        return self.stack[-1]
         
 
     def getMin(self):
         """
         :rtype: int
         """
-        if self.min_stack:
-            return self.min_stack[-1]
-        return None
+        return self.min_stack[-1]
     
