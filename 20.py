@@ -12,14 +12,18 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        stack =[]
-        mapping={")":"(", "}":"{", "]":"["}
-        for char in s:
-            if char in mapping:
-                top_element = stack.pop() if stack else '#'
-                if mapping[char] != top_element:
+        stack=[]
+        closeToOpen={")":"(","]":"[","}":"{"}
+        for c in s :
+            if c in closeToOpen:
+                if stack and stack[-1] == closeToOpen[c]:
+                    stack.pop()
+                else:
                     return False
             else:
-                stack.append(char)
-        return not stack
+                stack.append(c)
+
+        return True if not stack else False
+
+
     
