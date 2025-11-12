@@ -1,8 +1,4 @@
-''' Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
-
-Each row must contain the digits 1-9 without repetition.
-Each column must contain the digits 1-9 without repetition.
-Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition. '''
+import collections
 
 class Solution(object):
     def isValidSudoku(self,board):
@@ -10,23 +6,20 @@ class Solution(object):
         :type board: List[List[str]]
         :rtype: bool
         """
-        rows = {}
-        cols = {}
-        boxes = {}
-
-        for i in range(9):
-            for j in range(9):
-                if board[i][j] != '.':
-                    num = board[i][j]
-                    box_index = (i // 3) * 3 + j // 3
-
-                    if (i, num) in rows or (j, num) in cols or (box_index, num) in boxes:
+        cols= collections.defaultdict(set)
+        rows= collections.defaultdict(set)
+        boxes= collections.defaultdict(set) #key= (r/3,c/3)
+        
+        for r in range(9):
+            for c in range(9):
+                if board[r][c] != ".":
+                    if (board[r][c] in rows[r] or 
+                        board[r][c] in cols[c] or 
+                        board[r][c] in boxes[(r//3,c//3)]):
                         return False
-
-                    rows[(i, num)] = True
-                    cols[(j, num)] = True
-                    boxes[(box_index, num)] = True
-
+                    
+                    cols[c].add(board[r][c])
+                    rows[r].add(board[r][c])
+                    boxes[(r//3,c//3)].add(board[r][c])
+        
         return True
-        
-        
