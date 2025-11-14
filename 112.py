@@ -28,4 +28,6 @@ class Solution(object):
             
         return dfs(0, root)
                 
-        
+ # O(n) time complexity
+# O(log n) space complexity in balanced tree
+# O(h) space complexity in skewed tree where h is height of tree
